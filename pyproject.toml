@@ -28,16 +28,15 @@ requires = [
 line-length = 120
 target-version = ["py38"]
 
-[tool.cibuildwheel]
-manylinux-aarch64-image = "manylinux_2_28"
-manylinux-x86_64-image = "sameli/manylinux_2_28_x86_64"
+# [tool.cibuildwheel]
+# manylinux-aarch64-image = "manylinux_2_28"
+# manylinux-x86_64-image = "sameli/manylinux_2_28_x86_64"
 
 [tool.cibuildwheel.linux]
 build = "cp38-* cp39-* cp310-*"
 skip = [
   "*-manylinux_i686",
   "*-musllinux*",
-  "*aarch64*",
   "*macosx*",
   "*win*",
   "*2014*",
