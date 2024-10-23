@@ -47,9 +47,6 @@ jobs:
   build:
     name: ${{ inputs.os }}-py${{ inputs.python }}-torch${{ inputs.torch_version }}
     runs-on: ${{ inputs.os }}
-    strategy:
-      matrix:
-        download_area: [CN, EU]
 
     steps:
       - name: Checkout private silicondiff-npu
