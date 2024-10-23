@@ -22,7 +22,7 @@ on:
         required: true
         description: "Example: 2.3.0"
     secrets:
-      GITHUB_PRIV_TOKEN:
+      GH_PRIV_TOKEN:
         required: true
   workflow_dispatch:
     inputs:
@@ -54,7 +54,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: siliconflow/silicondiff-npu
-          token: ${{ secrets.GITHUB_PRIV_TOKEN }}
+          token: ${{ secrets.GH_PRIV_TOKEN }}
           submodules: recursive
           path: "."
           fetch-depth: 0 # for tags

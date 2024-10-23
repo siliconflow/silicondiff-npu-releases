@@ -49,7 +49,7 @@ jobs:
       python: ${{ matrix.python }}
       torch_version: ${{ matrix.torch_version }}
     secrets:
-      GITHUB_PRIV_TOKEN: ${{ secrets.GITHUB_PRIV_TOKEN }}
+      GH_PRIV_TOKEN: ${{ secrets.GH_PRIV_TOKEN }}
 
   deploy:
     needs: build
