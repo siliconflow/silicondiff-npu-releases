@@ -74,12 +74,19 @@ jobs:
           # and <MINOR> is the minor version
           echo "CIBW_BUILD=cp${major}${minor}-*" >> ${GITHUB_ENV}
 
+      - name: Set up QEMU
+        if: runner.os == 'Linux'
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: all
+
       - name: Install cibuildwheel
         run: python -m pip install cibuildwheel==2.18.1
 
       - name: Build wheels
         env:
           CIBW_BUILD_FRONTEND: "pip; args: --no-build-isolation"
+          CIBW_ARCHS_LINUX: auto aarch64
         run: python -m cibuildwheel --config-file downloads/silicondiff-npu-releases/pyproject.toml --output-dir wheelhouse
 
       - uses: actions/upload-artifact@v3
