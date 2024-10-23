@@ -16,6 +16,11 @@ on:
       - add-repair
   workflow_call:
     inputs:
+      silicondiff_tag:
+        type: string
+        required: true
+        default: "v2.1.0"
+        description: "Build silicondiff-npu version. Example: v2.1.0, v2.1.0.post3"
       torch_version:
         type: string
         required: true
@@ -23,6 +28,11 @@ on:
         description: "Build pytorch version. Example: 2.1.0"
   workflow_dispatch:
     inputs:
+      silicondiff_tag:
+        type: string
+        required: true
+        default: "v2.1.0"
+        description: "Build silicondiff-npu version. Example: v2.1.0"
       torch_version:
         type: string
         required: true
@@ -52,8 +62,8 @@ jobs:
     uses: ./.github/workflows/build.yaml
     with:
       os: ${{ matrix.os }}
-      tag: "v${{ inputs.torch_version }}"
       python: ${{ matrix.python }}
+      silicondiff_tag: ${{ inputs.silicondiff_tag }}
       torch_version: ${{ inputs.torch_version }}
     secrets:
       GH_PRIV_TOKEN: ${{ secrets.GH_PRIV_TOKEN }}
