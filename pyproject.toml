@@ -1,0 +1,62 @@
+[project]
+
+name = "silicondiff_npu"
+# version = "0.0.1"  # Remove any existing version parameter.
+dynamic = ["version", "dependencies", "optional-dependencies"]
+requires-python = ">=3.8"
+authors = [{ name = "SiliconFlow" }]
+description = "Text generation image acceleration library developed by SiliconFlow on Huawei Ascend NPU"
+
+[project.urls]
+
+Repository = "https://github.com/siliconflow/silicondiff-npu"
+
+[build-system]
+
+requires = [
+  "setuptools>=64",
+  "setuptools_scm>=8",
+  "torch",
+  "ninja",
+  "wheel",
+  "Cython",
+]
+# build-backend = "setuptools.build_meta"
+
+[tool.black]
+
+line-length = 120
+target-version = ["py38"]
+
+[tool.cibuildwheel]
+manylinux-aarch64-image = "manylinux_2_28"
+manylinux-x86_64-image = "sameli/manylinux_2_28_x86_64"
+
+[tool.cibuildwheel.linux]
+build = "cp38-* cp39-* cp310-*"
+skip = [
+  "*-manylinux_i686",
+  "*-musllinux*",
+  "*aarch64*",
+  "*macosx*",
+  "*win*",
+  "*2014*",
+]
+environment-pass = [
+  "CIBW_ARCHS",
+  "CMAKE_ARGS",
+  "CMAKE_GENERATOR",
+  "HOST_CCACHE_DIR",
+  "DATETIME",
+  "MATRIX_OS",
+  "PIP_FIND_LINKS",
+  "PIP_NO_BUILD_ISOLATION",
+  "PY",
+  "TORCH_VERSION",
+]
+before-build = [
+  "bash {project}/downloads/nexfort_releases/scripts/install_deps.sh",
+]
+repair-wheel-command = [
+  "auditwheel repair --exclude libc10.so --exclude libc10_cuda.so --exclude libtorch.so --exclude libtorch_cuda.so --exclude libtorch_cpu.so --exclude libtorch_python.so -w {dest_dir} {wheel}",
+]

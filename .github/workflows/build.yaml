@@ -1,0 +1,89 @@
+---
+name: Build
+on:
+  schedule:
+    - cron: 0 10 * * *
+  push:
+    branches: [main]
+  workflow_call:
+    inputs:
+      os:
+        type: string
+        required: true
+        default: "ubuntu-20.04"
+        description: "Example: ubuntu-20.04 or windows-2019"
+      python:
+        type: string
+        required: true
+        default: "3.10"
+        description: "Example: 3.10"
+      torch_version:
+        type: string
+        required: true
+        description: "Example: 2.3.0"
+    secrets:
+      GITHUB_PRIV_TOKEN:
+        required: true
+  workflow_dispatch:
+    inputs:
+      os:
+        type: string
+        required: true
+        default: "ubuntu-20.04"
+        description: "Example: ubuntu-20.04 or windows-2019"
+      python:
+        type: string
+        required: true
+        default: "3.10"
+        description: "Example: 3.10"
+      torch_version:
+        type: string
+        required: true
+        description: "Example: 2.3.0 or 2.4.0.dev20240507"
+
+jobs:
+  build:
+    name: ${{ inputs.os }}-py${{ inputs.python }}-torch${{ inputs.torch_version }}
+    runs-on: ${{ inputs.os }}
+    strategy:
+      matrix:
+        download_area: [CN, EU]
+
+    steps:
+      - name: Checkout private silicondiff-npu
+        uses: actions/checkout@v3
+        with:
+          repository: siliconflow/silicondiff-npu
+          token: ${{ secrets.GITHUB_PRIV_TOKEN }}
+          submodules: recursive
+          path: "."
+          fetch-depth: 0 # for tags
+
+      - name: Checkout silicondiff-npu-releases
+        uses: actions/checkout@v3
+        with:
+          repository: siliconflow/silicondiff-npu-releases
+          path: downloads/silicondiff-npu-releases
+
+      - name: Install dependencies
+        run: |
+          echo "TORCH_VERSION=${{ inputs.torch_version }}" >> ${GITHUB_ENV}
+
+          major=$(echo ${{ inputs.python }} | cut -d. -f1)
+          minor=$(echo ${{ inputs.python }} | cut -d. -f2)
+          # Generate the pattern cp<MAJOR><MINOR>-*
+          # where <MAJOR> is the major version without the dot
+          # and <MINOR> is the minor version
+          echo "CIBW_BUILD=cp${major}${minor}-*" >> ${GITHUB_ENV}
+
+      - name: Install cibuildwheel
+        run: python -m pip install cibuildwheel==2.18.1
+
+      - name: Build wheels
+        env:
+          CIBW_BUILD_FRONTEND: "pip; args: --no-build-isolation"
+        run: python -m cibuildwheel --config-file downloads/silicondiff-npu-releases/pyproject.toml --output-dir wheelhouse
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: wheelhouse/*.whl
