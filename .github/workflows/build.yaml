@@ -55,9 +55,7 @@ jobs:
         with:
           repository: siliconflow/silicondiff-npu
           token: ${{ secrets.GH_PRIV_TOKEN }}
-          submodules: recursive
           path: "."
-          fetch-depth: 0 # for tags
 
       - name: Checkout silicondiff-npu-releases
         uses: actions/checkout@v3
