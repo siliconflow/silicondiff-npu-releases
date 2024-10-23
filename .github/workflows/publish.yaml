@@ -20,14 +20,14 @@ on:
         type: string
         required: true
         default: "2.1.0"
-        description: "Example: 2.1.0"
+        description: "Build pytorch version. Example: 2.1.0"
   workflow_dispatch:
     inputs:
       torch_version:
         type: string
         required: true
         default: "2.1.0"
-        description: "Example: 2.1.0"
+        description: "Build pytorch version. Example: 2.1.0"
 
 permissions:
   contents: read

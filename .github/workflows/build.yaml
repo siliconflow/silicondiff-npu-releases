@@ -11,22 +11,22 @@ on:
         type: string
         required: true
         default: "ubuntu-20.04"
-        description: "Example: ubuntu-20.04 or windows-2019"
-      tag:
-        type: string
-        required: true
-        default: "main"
-        description: "Example: main or v2.1.0, v2.2.0"
+        description: "Build OS. Example: ubuntu-20.04 or windows-2019"
       python:
         type: string
         required: true
         default: "3.10"
-        description: "Example: 3.10"
+        description: "Build python version. Example: 3.10"
+      tag:
+        type: string
+        required: true
+        default: "main"
+        description: "Build silicondiff-npu version. Example: main or v2.1.0, v2.2.0"
       torch_version:
         type: string
         required: true
         default: "2.1.0"
-        description: "Example: 2.3.0"
+        description: "Build pytorch version. Example: 2.3.0"
     secrets:
       GH_PRIV_TOKEN:
         required: true
@@ -36,22 +36,22 @@ on:
         type: string
         required: true
         default: "ubuntu-20.04"
-        description: "Example: ubuntu-20.04 or windows-2019"
-      tag:
-        type: string
-        required: true
-        default: "main"
-        description: "Example: main or v2.1.0, v2.2.0"
+        description: "Build OS. Example: ubuntu-20.04 or windows-2019"
       python:
         type: string
         required: true
         default: "3.10"
-        description: "Example: 3.10"
+        description: "Build python version. Example: 3.10"
+      tag:
+        type: string
+        required: true
+        default: "main"
+        description: "Build silicondiff-npu version. Example: main or v2.1.0, v2.2.0"
       torch_version:
         type: string
         required: true
         default: "2.1.0"
-        description: "Example: 2.3.0"
+        description: "Build pytorch version. Example: 2.3.0"
 
 jobs:
   build:
