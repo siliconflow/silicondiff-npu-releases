@@ -52,6 +52,7 @@ environment-pass = [
   "PIP_NO_BUILD_ISOLATION",
   "PY",
   "TORCH_VERSION",
+  "TORCH_NPU_VERSION",
 ]
 before-build = [
   "bash {project}/downloads/silicondiff-npu-releases/scripts/install_deps.sh",

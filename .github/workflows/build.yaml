@@ -27,6 +27,11 @@ on:
         required: true
         default: "2.1.0"
         description: "Build pytorch version. Example: 2.3.0"
+      torch_npu_version:
+        type: string
+        required: true
+        default: "2.1.0.post3"
+        description: "Build torch-npu version. Example: 2.1.0.post3"
     secrets:
       GH_PRIV_TOKEN:
         required: true
@@ -52,6 +57,11 @@ on:
         required: true
         default: "2.1.0"
         description: "Build pytorch version. Example: 2.3.0"
+      torch_npu_version:
+        type: string
+        required: true
+        default: "2.1.0.post3"
+        description: "Build torch-npu version. Example: 2.1.0.post3"
 
 jobs:
   build:
@@ -76,6 +86,7 @@ jobs:
       - name: Install dependencies
         run: |
           echo "TORCH_VERSION=${{ inputs.torch_version }}" >> ${GITHUB_ENV}
+          echo "TORCH_NPU_VERSION=${{ inputs.torch_npu_version }}" >> ${GITHUB_ENV}
 
           major=$(echo ${{ inputs.python }} | cut -d. -f1)
           minor=$(echo ${{ inputs.python }} | cut -d. -f2)

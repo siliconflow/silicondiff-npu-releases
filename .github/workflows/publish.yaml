@@ -26,6 +26,11 @@ on:
         required: true
         default: "2.1.0"
         description: "Build pytorch version. Example: 2.1.0"
+      torch_npu_version:
+        type: string
+        required: true
+        default: "2.1.0.post3"
+        description: "Build torch-npu version. Example: 2.1.0.post3"
   workflow_dispatch:
     inputs:
       silicondiff_tag:
@@ -38,6 +43,11 @@ on:
         required: true
         default: "2.1.0"
         description: "Build pytorch version. Example: 2.1.0"
+      torch_npu_version:
+        type: string
+        required: true
+        default: "2.1.0.post3"
+        description: "Build torch-npu version. Example: 2.1.0.post3"
 
 permissions:
   contents: read
@@ -65,6 +75,7 @@ jobs:
       python: ${{ matrix.python }}
       silicondiff_tag: ${{ inputs.silicondiff_tag }}
       torch_version: ${{ inputs.torch_version }}
+      torch_npu_version: ${{ inputs.torch_npu_version }}
     secrets:
       GH_PRIV_TOKEN: ${{ secrets.GH_PRIV_TOKEN }}
 
